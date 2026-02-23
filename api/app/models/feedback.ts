@@ -16,22 +16,22 @@ export default class Feedback extends BaseModel {
   }
 
   @column()
-  declare tag_id: string
+  declare tagId: string
 
   @belongsTo(() => Tag)
   declare tag: BelongsTo<typeof Tag>
 
   @column()
-  declare project_id: string
+  declare projectId: string
 
   @belongsTo(() => Project)
   declare project: BelongsTo<typeof Project>
 
   @column()
-  declare customer_id: string
+  declare userId: string
 
   @belongsTo(() => User)
-  declare customer: BelongsTo<typeof User>
+  declare user: BelongsTo<typeof User>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

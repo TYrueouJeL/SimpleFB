@@ -5,7 +5,7 @@ export const createProjectValidator = vine.compile(
         name: vine
             .string(),
 
-        is_public: vine
+        isPublic: vine
             .boolean(),
     })
 )
@@ -16,7 +16,7 @@ export const updateProjectValidator = vine.compile(
             .string()
             .optional(),
 
-        is_public: vine
+        isPublic: vine
             .boolean()
             .optional(),
     })

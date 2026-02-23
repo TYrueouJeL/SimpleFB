@@ -28,6 +28,18 @@ export class ProjectUserFactory {
     const pairs = new Set<string>()
     const results = []
 
+    if (data.userId && data.projectIds) {
+        for (const projectId of data.projectIds) {
+            const key = `${data.userId}-${projectId}`
+            if (!pairs.has(key)) {
+                pairs.add(key)
+                results.push(await this.create({ ...data, userId: data.userId, projectId }))
+            }
+            if (results.length >= count) break
+        }
+        return results
+    }
+
     while (results.length < count) {
         const userId = data.userIds 
             ? faker.helpers.arrayElement(data.userIds) 

@@ -4,10 +4,11 @@ import { CreateProjectDTO, UpdateProjectDTO } from "../dto/projectDTO.js";
 
 export default class ProjectService {
     public async list(userId: string) {
-        return ProjectUser.query()
-            .where('user_id', userId)
+        const projectUsers = await ProjectUser.query()
+            .where('userId', userId)
             .preload('project')
-            .preload('user')
+
+        return projectUsers.map(pu => pu.project)
     }
 
     public async findById(projectId: string) {
@@ -37,7 +38,7 @@ export default class ProjectService {
         id: project.id,
         name: project.name,
         slug: project.slug,
-        is_public: project.is_public
+        isPublic: project.isPublic
     }
     }
 

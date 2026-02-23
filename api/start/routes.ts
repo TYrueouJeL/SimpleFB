@@ -11,6 +11,7 @@ import AuthController from '#controllers/authController'
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
 import ProjectController from '#controllers/projectController'
+import FeedbackController from '#controllers/feedbackController'
 
 router.get('/', async () => {
   return {
@@ -31,12 +32,12 @@ router.group(() => {
   router.delete('/:projectSlug', [ProjectController, 'delete'])
 
   router.group(() => {
-    router.get('/', [ProjectController, 'index'])
-    router.post('/', [ProjectController, 'store'])
-    router.get('/:feedbackId', [ProjectController, 'show'])
-    router.put('/:feedbackId', [ProjectController, 'update'])
-    router.delete('/:feedbackId', [ProjectController, 'delete'])
+    router.get('/', [FeedbackController, 'index'])
+    router.post('/', [FeedbackController, 'store'])
+    router.get('/:feedbackId', [FeedbackController, 'show'])
+    router.put('/:feedbackId', [FeedbackController, 'update'])
+    router.delete('/:feedbackId', [FeedbackController, 'delete'])
   })
-  .prefix('/feedback')
+  .prefix('/:projectSlug/feedback')
 })
 .prefix('/project').use(middleware.auth({ guards: ['api'] }))

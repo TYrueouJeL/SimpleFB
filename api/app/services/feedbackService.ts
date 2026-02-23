@@ -4,9 +4,9 @@ import { CreateFeedbackDTO, UpdateFeedbackDTO } from "../dto/feedbackDTO.js";
 export default class FeedbackService {
     public async list(projectId: string) {
         return Feedback.query()
-            .where('project_id', projectId)
+            .where('projectId', projectId)
             .preload('project')
-            .preload('customer')
+            .preload('user')
             .preload('tag')
     }
 
@@ -15,7 +15,7 @@ export default class FeedbackService {
             .query()
             .where('id', feedbackId)
             .preload('project')
-            .preload('customer')
+            .preload('user')
             .preload('tag')
             .firstOrFail()
     }
@@ -32,9 +32,13 @@ export default class FeedbackService {
             id: feedback.id,
             tag: feedback.tag,
             project: feedback.project,
-            customer: feedback.customer
+            customer: feedback.user
         }
     }
 
-    public async delete(feedbackId: string)
+    public async delete(feedbackId: string) {
+        const feedback = await Feedback.findByOrFail('id', feedbackId)
+        await feedback.delete()
+        return true
+    }
 }

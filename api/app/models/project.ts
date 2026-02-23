@@ -29,7 +29,7 @@ export default class Project extends BaseModel {
   }
 
   @column()
-  declare is_public: boolean
+  declare isPublic: boolean
 
   @hasMany(() => ProjectUser)
   declare users: HasMany<typeof ProjectUser>
