@@ -1,0 +1,49 @@
+import Project from "#models/project";
+import ProjectUser from "#models/project_user";
+import { CreateProjectDTO, UpdateProjectDTO } from "../dto/projectDTO.js";
+
+export default class ProjectService {
+    public async list(userId: string) {
+        return ProjectUser.query()
+            .where('user_id', userId)
+            .preload('project')
+            .preload('user')
+    }
+
+    public async findById(projectId: string) {
+        return Project
+            .query()
+            .where('id', projectId)
+            .preload('users')
+            .firstOrFail()
+    }
+
+    public async findBySlug(slug: string) {
+        return Project.query()
+            .where('slug', slug)
+            .preload('users')
+            .first()
+    }
+
+    public async create(data: CreateProjectDTO) {
+        return Project.create(data)
+    }
+
+    public async update(slug: string, data: UpdateProjectDTO) {
+    const project = await Project.findByOrFail('slug', slug)
+    project.merge(data)
+    await project.save()
+    return {
+        id: project.id,
+        name: project.name,
+        slug: project.slug,
+        is_public: project.is_public
+    }
+    }
+
+    public async delete(slug: string) {
+    const project = await Project.findByOrFail('slug', slug)
+    await project.delete()
+    return true
+    }
+}
