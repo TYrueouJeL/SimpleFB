@@ -3,4 +3,6 @@ export interface Project {
     name: string
     slug: string
     is_public: boolean
+    createdAt: Date
+    updatedAt?: Date
 }

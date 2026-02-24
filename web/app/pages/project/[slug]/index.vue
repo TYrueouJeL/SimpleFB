@@ -1,5 +1,6 @@
 <template>
     <div>
+        <NuxtLink to="/project" class="inline-flex items-center gap-2 text-gray-400"><Icon name="mdi:arrow-left"/>Retour</NuxtLink>
         <p>Projet {{ project?.name }}</p>
         <p v-if="project?.is_public">Public</p>
         <p v-else>Privé</p>

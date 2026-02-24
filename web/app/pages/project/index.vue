@@ -1,13 +1,31 @@
 <template>
-    <div class="grid grid-cols-3 gap-4">
-        <NuxtLink
-        class="p-2 hover:bg-gray-100 rounded"
-        v-for="project in projects"
-        :key="project.id"
-        :to="`/project/${project.slug}`"
-        >
-            {{ project.name }}
-        </NuxtLink>
+    <div>
+        <p class="text-2xl font-bold mb-4">Vos projets :</p>
+
+        <div class="my-4 flex justify-center">
+            <NuxtLink
+            class="border p-2 rounded hover:bg-gray-200 transition duration-300"
+            :to="`/project/new`"
+            >
+                Nouveau projet
+            </NuxtLink>
+        </div>
+    
+        <div class="grid grid-cols-3 gap-4 my-4">
+            <NuxtLink
+            class="p-2 hover:bg-gray-100 border rounded border-gray-200 transition duration-300"
+            v-for="project in projects"
+            :key="project.id"
+            :to="`/project/${project.slug}`"
+            >
+            <p>
+                Nom : {{ project.name }}
+            </p>
+            <p>
+                Date de création : {{ new Date(project.createdAt).toLocaleDateString() }}
+            </p>
+            </NuxtLink>
+        </div>
     </div>
 </template>
 

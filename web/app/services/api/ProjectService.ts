@@ -19,8 +19,24 @@ export default class ProjectService {
         const { token } = useAuthStore()
 
         return $fetch<Project>(`${apiUrl}/project/${slug}`, {
+            method: 'GET',
             headers: {
                 Authorization: `Bearer ${token}`
+            }
+        })
+    }
+
+    static async create(name: string, isPublic: boolean) {
+        const { token } = useAuthStore()
+
+        return $fetch<Project>(`${apiUrl}/project`, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            body: {
+                name,
+                isPublic
             }
         })
     }
