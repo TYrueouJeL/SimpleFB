@@ -1,6 +1,8 @@
 import Project from "#models/project";
 import ProjectUser from "#models/project_user";
 import { CreateProjectDTO, UpdateProjectDTO } from "../dto/projectDTO.js";
+import { CreateProjectUserDTO } from "../dto/projectUserDTO.js";
+import { RoleEnum } from "../enums/roleEnum.js";
 
 export default class ProjectService {
     public async list(userId: string) {
@@ -46,5 +48,18 @@ export default class ProjectService {
     const project = await Project.findByOrFail('slug', slug)
     await project.delete()
     return true
+    }
+
+    public async addUser(data: CreateProjectUserDTO) {
+        const projectUser = await ProjectUser.query()
+            .where('userId', data.userId)
+            .andWhere('projectId', data.projectId)
+            .firstOrFail()
+
+        if (projectUser.role !== RoleEnum.ADMIN && projectUser.role !== RoleEnum.OWNER) {
+            throw new Error('Unauthorized: user must be ADMIN or OWNER')
+        }
+
+        return ProjectUser.create(data)
     }
 }

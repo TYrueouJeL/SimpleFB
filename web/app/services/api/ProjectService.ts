@@ -29,6 +29,10 @@ export default class ProjectService {
     static async create(name: string, isPublic: boolean) {
         const { token } = useAuthStore()
 
+        if (!name || name.trim().length === 0) {
+            throw new Error("Le nom du projet ne peut pas être vide ou uniquement constitué d'espaces")
+        }
+
         return $fetch<Project>(`${apiUrl}/project`, {
             method: 'POST',
             headers: {

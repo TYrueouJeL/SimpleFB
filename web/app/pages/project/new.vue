@@ -63,9 +63,15 @@ async function handleCreate() {
         messageType.value = 'success'
         form.name = ''
         form.isPublic = true
-    } catch (err) {
+    } catch (err: any) {
         console.error(err)
-        message.value = 'Erreur lors de la création du projet.'
+        if (err?.data?.message) {
+            message.value = err.data.message
+        } else if (err?.message) {
+            message.value = err.message
+        } else {
+            message.value = 'Erreur lors de la création du projet.'
+        }
         messageType.value = 'error'
     } finally {
         loading.value = false

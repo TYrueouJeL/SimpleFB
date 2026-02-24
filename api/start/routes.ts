@@ -39,5 +39,10 @@ router.group(() => {
     router.delete('/:feedbackId', [FeedbackController, 'delete'])
   })
   .prefix('/:projectSlug/feedback')
+
+  router.group(() => {
+    router.post('/', [ProjectController, 'addUser'])
+  })
+  .prefix('/user')
 })
 .prefix('/project').use(middleware.auth({ guards: ['api'] }))
