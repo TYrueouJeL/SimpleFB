@@ -75,11 +75,11 @@
 
         <div>
             <h2 class="text-xl font-semibold mb-4">Feedbacks</h2>
-            <div v-for="feedback in feedbacks" class="border rounded p-2 my-2">
+            <div v-for="feedback in feedbacks" class="border rounded-xl hover:shadow-md transition bg-white p-4 my-2">
                 <div>
                     <p class="font-semibold">{{ feedback.title }}</p>
 
-                    <div class="flex items-center gap-1">
+                    <div class="flex items-center">
                         <Icon
                             v-for="i in 5"
                             :key="i"
@@ -88,6 +88,7 @@
                         />
                     </div>
                 </div>
+
                 <p class="text-sm text-gray-500">Créé le {{ new Date(feedback.createdAt).toLocaleDateString() }}</p>
             </div>
         </div>

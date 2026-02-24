@@ -1,5 +1,5 @@
 <template>
-    <div class="max-w-md mx-auto mt-10 p-4 border rounded shadow">
+    <div class="max-w-md mx-auto mt-10 p-4 border rounded text-center">
         <h1 class="text-2xl font-bold mb-4">Créer un nouveau projet</h1>
 
         <form @submit.prevent="handleCreate" class="space-y-4">
@@ -25,11 +25,7 @@
             <label for="isPublic">Projet public</label>
         </div>
 
-        <button
-            type="submit"
-            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-            :disabled="loading"
-        >
+        <button type="submit" :disabled="loading" class="border rounded p-2 hover:bg-gray-300 transition duration-300">
             {{ loading ? 'Création...' : 'Créer le projet' }}
         </button>
         </form>
