@@ -1,6 +1,7 @@
 <template>
     <div>
-        <h1>Ceci est la page dashboard</h1>
+        <h1 class="text-2xl font-bold mb-4">Dashboard</h1>
+        <p>Bienvenue sur votre dashboard !</p>
     </div>
 </template>
 

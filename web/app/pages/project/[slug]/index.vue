@@ -13,8 +13,9 @@ import type { Project } from '~/types/Project';
 const route = useRoute()
 const slug = route.params.slug as string
 
-const { data: project } = await useAsyncData<Project>('project', () =>
-    ProjectService.getBySlug(slug)
+const { data: project, refresh } = await useAsyncData<Project>(
+    () => `project-${route.params.slug}`,
+    () => ProjectService.getBySlug(route.params.slug as string)
 )
 
 useHead(() => ({

@@ -11,6 +11,8 @@ export const useAuthStore = defineStore('user', () => {
     const isLoggedIn = computed(() => !!token.value && !!user.value)
 
     async function register(firstname: string, lastname: string, email: string, password: string) {
+        const projectsStore = useProjectStore()
+
         loading.value = true
         error.value = null
 
@@ -23,6 +25,8 @@ export const useAuthStore = defineStore('user', () => {
             user.value = data.user
             token.value = data.token
 
+            projectsStore.fetchAll()
+
             await navigateTo('/dashboard')
         } catch (err: any) {
             error.value = err?.data?.message ?? 'Erreur lors de l\'inscription'
@@ -32,6 +36,7 @@ export const useAuthStore = defineStore('user', () => {
     }
 
     async function login(email: string, password: string) {
+        const projectsStore = useProjectStore()
         loading.value = true
         error.value = null
 
@@ -44,6 +49,8 @@ export const useAuthStore = defineStore('user', () => {
             user.value = data.user
             token.value = data.token
 
+            projectsStore.fetchAll()
+
             await navigateTo('/dashboard')
         } catch (err: any) {
             error.value = err?.data?.message ?? 'Email ou mot de passe incorrect'
@@ -53,9 +60,12 @@ export const useAuthStore = defineStore('user', () => {
     }
 
     async function logout() {
+        const projectsStore = useProjectStore()
+
         try {
             await $fetch(`${apiUrl}/logout`, { method: 'POST' })
         } finally {
+            projectsStore.reset()
             user.value = null
             token.value = null
             await navigateTo('/')

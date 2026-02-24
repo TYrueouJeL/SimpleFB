@@ -1,12 +1,11 @@
 <template>
     <div>
-        <h1>Ceci est un titre</h1>
+        <h1>Bienvenue sur Projet 3</h1>
     </div>
 </template>
 
-
 <script setup lang="ts">
 useHead(() => ({
-    title: 'Accueil'
+    title: 'Projet 3'
 }))
 </script>

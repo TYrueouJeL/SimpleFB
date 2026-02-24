@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
 import guest from '~/middlewares/guest';
-import { useAuthStore } from '~/store/auth';
+import { useAuthStore } from '~/stores/auth';
 
 definePageMeta({ middleware: guest })
 

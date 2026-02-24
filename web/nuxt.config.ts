@@ -2,12 +2,5 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-
-  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
-
-  runtimeConfig: {
-    public: {
-      apiBase: import.meta.env.VITE_API_URL || 'http://localhost:3333'
-    }
-  }
+  modules: ['@pinia/nuxt', '@nuxtjs/tailwindcss', '@nuxt/icon']
 })

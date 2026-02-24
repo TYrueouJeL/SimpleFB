@@ -1,4 +1,4 @@
-import { useAuthStore } from "~/store/auth"
+import { useAuthStore } from "~/stores/auth"
 import type { Project } from "~/types/Project"
 
 const apiUrl = import.meta.env.VITE_API_URL
