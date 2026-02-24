@@ -31,6 +31,7 @@ export default class FeedbackService {
         return {
             id: feedback.id,
             title: feedback.title,
+            note: feedback.note,
             tag: feedback.tag,
             project: feedback.project,
             customer: feedback.user

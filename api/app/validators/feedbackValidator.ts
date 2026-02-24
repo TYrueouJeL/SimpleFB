@@ -2,6 +2,14 @@ import vine from "@vinejs/vine";
 
 export const createFeedbackValidator = vine.compile(
     vine.object({
+        title: vine
+            .string(),
+
+        note: vine
+            .number()
+            .min(1)
+            .max(5),
+
         tagId: vine
             .string(),
 
@@ -15,6 +23,16 @@ export const createFeedbackValidator = vine.compile(
 
 export const updateFeedbackValidator = vine.compile(
     vine.object({
+        title: vine
+            .string()
+            .optional(),
+
+        note: vine
+            .number()
+            .min(1)
+            .max(5)
+            .optional(),
+
         tagId: vine
             .string()
             .optional(),
