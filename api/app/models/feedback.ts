@@ -16,6 +16,9 @@ export default class Feedback extends BaseModel {
   }
 
   @column()
+  declare title: string
+
+  @column()
   declare tagId: string
 
   @belongsTo(() => Tag)

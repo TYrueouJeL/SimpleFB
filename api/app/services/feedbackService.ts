@@ -30,6 +30,7 @@ export default class FeedbackService {
         await feedback.save()
         return {
             id: feedback.id,
+            title: feedback.title,
             tag: feedback.tag,
             project: feedback.project,
             customer: feedback.user

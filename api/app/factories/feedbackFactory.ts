@@ -5,6 +5,7 @@ import Feedback from "#models/feedback"
 import { TagFactory } from "./tagFactory.js"
 
 type FeedbackType = {
+    title?: string
     tagId?: string
     projectId?: string
     userId?: string
@@ -20,9 +21,10 @@ export class FeedbackFactory {
         const user = data.userId ? null : await UserFactory.create()
 
         return Feedback.create({
-            tag_id: data.tagId ?? faker.string.uuid() ?? tag!.id,
-            project_id: data.projectId ?? faker.string.uuid() ?? project!.id,
-            user_id: data.userId ?? faker.string.uuid() ?? user!.id
+            title: data.title ?? faker.word.words(),
+            tagId: data.tagId ?? faker.string.uuid() ?? tag!.id,
+            projectId: data.projectId ?? faker.string.uuid() ?? project!.id,
+            userId: data.userId ?? faker.string.uuid() ?? user!.id
         })
     }
 
