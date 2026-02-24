@@ -18,12 +18,9 @@
             :key="project.id"
             :to="`/project/${project.slug}`"
             >
-            <p>
-                Nom : {{ project.name }}
-            </p>
-            <p>
-                Date de création : {{ new Date(project.createdAt).toLocaleDateString() }}
-            </p>
+                <p>Nom : {{ project.name }}</p>
+                
+                <p class="text-sm text-gray-500">Créé le {{ new Date(project.createdAt).toLocaleDateString() }}</p>
             </NuxtLink>
         </div>
     </div>

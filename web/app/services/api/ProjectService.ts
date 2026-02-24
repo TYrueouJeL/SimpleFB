@@ -1,4 +1,5 @@
 import { useAuthStore } from "~/stores/auth"
+import type { Feedback } from "~/types/Feedback"
 import type { Project } from "~/types/Project"
 
 const apiUrl = import.meta.env.VITE_API_URL
@@ -41,6 +42,17 @@ export default class ProjectService {
             body: {
                 name,
                 isPublic
+            }
+        })
+    }
+
+    static async getFeedbacks(projectSlug: string) {
+        const { token } = useAuthStore()
+
+        return $fetch<Feedback[]>(`${apiUrl}/project/${projectSlug}/feedback`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`
             }
         })
     }

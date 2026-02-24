@@ -57,12 +57,14 @@ async function handleCreate() {
     loading.value = true
     message.value = ''
     try {
-        await ProjectService.create(form.name, form.isPublic)
+        const createdProject = await ProjectService.create(form.name, form.isPublic)
         await projectStore.fetchAll()
         message.value = 'Projet créé avec succès !'
         messageType.value = 'success'
         form.name = ''
         form.isPublic = true
+
+        navigateTo(`/project/${createdProject.slug}`)
     } catch (err: any) {
         console.error(err)
         if (err?.data?.message) {
@@ -82,8 +84,3 @@ useHead(() => ({
     title: 'Nouveau projet'
 }))
 </script>
-project
-ef8b883c-13d2-4e50-8ec2-2d751943ce29
-
-user
-b293dc2f-03c1-4a9e-8dc9-b3bd2e0e9c08
