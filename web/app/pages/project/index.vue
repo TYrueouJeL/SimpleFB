@@ -13,12 +13,12 @@
     
         <div class="grid grid-cols-3 gap-4 my-4">
             <NuxtLink
-            class="p-2 hover:bg-gray-100 border rounded border-gray-200 transition duration-300"
+            class="hover:bg-gray-100 border rounded-xl bg-white hover:bg-white hover:shadow p-4 border-gray-200 transition duration-300 -m-1"
             v-for="project in projects"
             :key="project.id"
             :to="`/project/${project.slug}`"
             >
-                <p>Nom : {{ project.name }}</p>
+                <p class="text-ls font-semibold">{{ project.name }}</p>
                 
                 <p class="text-sm text-gray-500">Créé le {{ new Date(project.createdAt).toLocaleDateString() }}</p>
             </NuxtLink>
