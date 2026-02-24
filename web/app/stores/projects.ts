@@ -59,6 +59,6 @@ export const useProjectStore = defineStore('projects', () => {
         fetchAll,
         switchProject,
         invalidate,
-        reset,
+        reset
     }
 })

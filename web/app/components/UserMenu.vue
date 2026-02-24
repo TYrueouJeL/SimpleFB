@@ -22,6 +22,14 @@
         >
             Se connecter
         </NuxtLink>
+        <NuxtLink
+            v-if="!authStore.isLoggedIn"
+            @click="(open = false)"
+            to="/register"
+            class="block px-4 py-2 hover:bg-gray-100"
+        >
+            Créer un compte
+        </NuxtLink>
         <button
             v-else
             @click="logout"

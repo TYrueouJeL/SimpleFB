@@ -19,7 +19,7 @@ export const useAuthStore = defineStore('user', () => {
         try {
             const data = await $fetch<{ user: User; token: string }>(`${apiUrl}/register`, {
                 method: 'POST',
-                body: { firstname, lastname, password }
+                body: { firstname, lastname, email, password }
             })
 
             user.value = data.user
