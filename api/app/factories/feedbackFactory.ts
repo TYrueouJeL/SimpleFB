@@ -31,7 +31,6 @@ export class FeedbackFactory {
     }
 
     static async createMany(count: number, data: FeedbackType = {}) {
-        const pairs = new Set<string>()
         const results = []
 
         while (results.length < count) {
@@ -45,10 +44,6 @@ export class FeedbackFactory {
                 ? faker.helpers.arrayElement(data.tagIds)
                 : (await TagFactory.create()).id
 
-            const key = `${userId}-${projectId}-${tagId}`
-            if (pairs.has(key)) continue
-
-            pairs.add(key)
             results.push(await this.create({ ...data, userId, projectId, tagId }))
         }
 
