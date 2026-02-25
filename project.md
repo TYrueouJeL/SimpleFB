@@ -2,8 +2,9 @@
 
 - Backend : Adonisjs
     - Tunel de paiement : Lemon Squeezy
-    - BDD : Postgres
-- Frontend : Nuxt
+    - BDD : Postgres & PlanetScale
+- Frontend : Nuxt & Pinia
+    - Analytics : PostHog
 
 # RoadMap
 
