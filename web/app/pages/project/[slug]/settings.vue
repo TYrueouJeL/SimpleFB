@@ -36,6 +36,10 @@
         {{ message }}
         </p>
     </div>
+
+    <div class="text-center mt-4">
+        <button @click="handleDelete" class="border border-red-400 p-2 bg-red-100 rounded hover:bg-red-300 hover:shadow-lg transition">Supprimer le projet</button>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -73,6 +77,32 @@ async function handleUpdate() {
         await refreshNuxtData(`project-${project.value?.slug}`)
 
         navigateTo(`/project/${createdProject.slug}`)
+    } catch (err: any) {
+        console.error(err)
+        if (err?.data?.message) {
+            message.value = err.data.message
+        } else if (err?.message) {
+            message.value = err.message
+        } else {
+            message.value = 'Erreur lors de la création du projet.'
+        }
+        messageType.value = 'error'
+    } finally {
+        loading.value = false
+    }
+}
+
+async function handleDelete() {
+    loading.value = true
+    message.value = ''
+    try {
+        await projectStore.invalidate(project.value?.slug as string)
+        await ProjectService.delete(project.value?.slug as string)
+
+        message.value = 'Projet suppprimé avec succès !'
+        messageType.value = 'success'
+
+        navigateTo(`/project`)
     } catch (err: any) {
         console.error(err)
         if (err?.data?.message) {
