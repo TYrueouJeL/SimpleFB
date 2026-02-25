@@ -1,10 +1,14 @@
+import type { Project } from "./Project"
+import type { Tag } from "./Tag"
+import type { User } from "./User"
+
 export interface Feedback {
     id: string
     title: string
-    note: number
-    tagId: string
-    projectId: string
-    userId: string
+    isOpen: string
+    tag: Tag
+    project: Project
+    user: User
     createdAt: Date
     updatedAt?: Date
 }

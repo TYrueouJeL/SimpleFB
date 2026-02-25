@@ -17,9 +17,9 @@ export default class Feedback extends BaseModel {
 
   @column()
   declare title: string
-
-  @column()
-  declare note: number
+  
+    @column()
+    declare isOpen: boolean
 
   @column()
   declare tagId: string

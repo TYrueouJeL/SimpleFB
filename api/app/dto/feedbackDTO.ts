@@ -1,7 +1,7 @@
 export interface FeedbackDTO {
     id: string
     title: string
-    note: number
+    isOpen: boolean
     tagId: string
     projectId: string
     userId: string
@@ -9,7 +9,7 @@ export interface FeedbackDTO {
 
 export interface CreateFeedbackDTO {
     title: string
-    note: number
+    isOpen: boolean
     tagId: string
     projectId: string
     userId: string
@@ -17,7 +17,7 @@ export interface CreateFeedbackDTO {
 
 export interface UpdateFeedbackDTO {
     title?: string
-    note?: number
+    isOpen?: boolean
     tagId?: string
     projectId?: string
     userId?: string

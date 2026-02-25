@@ -5,10 +5,8 @@ export const createFeedbackValidator = vine.compile(
         title: vine
             .string(),
 
-        note: vine
-            .number()
-            .min(1)
-            .max(5),
+        isOpen: vine
+            .boolean(),
 
         tagId: vine
             .string(),
@@ -27,10 +25,8 @@ export const updateFeedbackValidator = vine.compile(
             .string()
             .optional(),
 
-        note: vine
-            .number()
-            .min(1)
-            .max(5)
+        isOpen: vine
+            .boolean()
             .optional(),
 
         tagId: vine

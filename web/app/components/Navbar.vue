@@ -9,7 +9,7 @@
                 to="/"
                 class="text-gray-100 hover:text-gray-400 transition duration-300"
             >
-                Projet 3
+                SimpleFB
             </NuxtLink>
         </div>
 
@@ -28,7 +28,7 @@
                 <NuxtLink
                 to="/project"
                 class="inline-flex items-center gap-2 w-full block px-4 py-2 rounded
-                        transition duration-200"
+                        transition duration-200 -mb-1"
                 :class="isProjectSectionActive ? 'bg-gray-700 text-teal-400' : 'text-gray-100 hover:bg-gray-600'"
                 >
                     <Icon name="mdi:folder-outline" /> Projets

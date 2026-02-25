@@ -16,6 +16,12 @@ export default class Tag extends BaseModel {
   @column()
   declare name: string
 
+  @column()
+  declare color: string
+
+  @column()
+  declare isOpen: boolean
+
   @hasMany(() => Feedback)
   declare feedbacks: HasMany<typeof Feedback>
 

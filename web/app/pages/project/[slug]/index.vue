@@ -21,7 +21,7 @@
             </NuxtLink>
         </div>
         
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 my-6
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 my-6
             max-w-5xl mx-auto">
             <div class="w-full bg-white rounded-xl border border-gray-200
             p-5 flex flex-col justify-between hover:shadow-md transition">
@@ -54,59 +54,32 @@
                     <p class="text-xs text-gray-400 mt-1">Total reçus</p>
                 </div>
             </div>
-
-
-            <div class="w-full bg-white rounded-xl border border-gray-200
-            p-5 flex flex-col justify-between hover:shadow-md transition">
-
-                <div class="flex items-center justify-between text-gray-500 text-sm">
-                    <span>Note moyenne</span>
-                    <Icon name="mdi:star" class="text-yellow-400" size="18"/>
-                </div>
-
-                <div>
-                    <div class="flex mb-1">
-                        <Icon
-                        v-for="i in 5"
-                        :key="i"
-                        :name="
-                            i <= Math.floor(averageRating)
-                            ? 'mdi:star'
-                            : i === Math.ceil(averageRating) && averageRating % 1 >= 0.5
-                            ? 'mdi:star-half-full'
-                            : 'mdi:star-outline'
-                        "
-                        class="text-yellow-400"
-                        size="18"
-                        />
-                    </div>
-
-                    <p class="text-xl font-semibold leading-none">
-                        {{ roundedAverage }}
-                        <span class="text-gray-400 text-sm font-normal">/ 5</span>
-                    </p>
-                </div>
-            </div>
-
         </div>
 
-        <div>
-            <h2 class="text-xl font-semibold mb-4">Feedbacks</h2>
-            <div v-for="feedback in feedbacks" class="border rounded-xl hover:shadow-md transition bg-white p-4 my-2">
-                <div>
+        <div class=" grid grid-cols-3 gap-2">
+            <h2 class="text-xl font-semibold mb-4 col-span-3">Feedbacks</h2>
+            <div v-for="feedback in feedbacks" class="border rounded-xl hover:shadow-md transition bg-white p-4">
+                <div class="flex justify-between mb-2">
                     <p class="font-semibold">{{ feedback.title }}</p>
 
-                    <div class="flex items-center">
-                        <Icon
-                            v-for="i in 5"
-                            :key="i"
-                            :name="i <= feedback.note ? 'mdi:star' : 'mdi:star-outline'"
-                            :class="i <= feedback.note ? 'text-yellow-400' : 'text-gray-300'"
-                        />
-                    </div>
+                    <p v-if="feedback.isOpen" class="bg-green-200 text-green-800 rounded-xl px-2 text-sm">Ouvert</p>
+                    <p v-else class="bg-red-200 text-red-800 rounded-xl px-2 text-sm">Fermé</p>
                 </div>
+                
+                <div class="flex justify-between">
+                    <p class="text-sm text-gray-500">Créé le {{ new Date(feedback.createdAt).toLocaleDateString() }} par {{ feedback.user.firstname }} {{ feedback.user.lastname }}</p>
 
-                <p class="text-sm text-gray-500">Créé le {{ new Date(feedback.createdAt).toLocaleDateString() }}</p>
+                    <span
+                    class="inline-block px-2 py-1 text-xs font-semibold rounded-full"
+                    :style="{
+                        backgroundColor: feedback.tag.color + '20',
+                        color: feedback.tag.color,
+                        border: '1px solid ' + feedback.tag.color
+                    }"
+                    >
+                        {{ feedback.tag.name }}
+                    </span>
+                </div>
             </div>
         </div>
     </div>
@@ -115,7 +88,6 @@
 <script setup lang="ts">
 import auth from '~/middlewares/auth';
 import ProjectService from '~/services/api/ProjectService';
-import type { Feedback } from '~/types/Feedback';
 import type { Project } from '~/types/Project';
 
 const route = useRoute()
@@ -125,21 +97,12 @@ const { data: project } = await useAsyncData<Project>(
     () => ProjectService.getBySlug(route.params.slug as string)
 )
 
-const { data: feedbacks, refresh: refreshFeedbacks } = await useAsyncData<Feedback[]>(
+const { data: feedbackResponse } = await useAsyncData(
     () => `feedbacks-${route.params.slug}`,
     () => ProjectService.getFeedbacks(route.params.slug as string)
 )
 
-const averageRating = computed(() => {
-    if (!feedbacks.value || feedbacks.value.length === 0) return 0
-
-    const total = feedbacks.value.reduce((sum, f) => sum + f.note, 0)
-    return total / feedbacks.value.length
-})
-
-const roundedAverage = computed(() => {
-  return Math.round(averageRating.value * 10) / 10
-})
+const feedbacks = computed(() => feedbackResponse.value?.data ?? [])
 
 definePageMeta({ middleware: auth })
 

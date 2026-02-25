@@ -6,7 +6,7 @@ import { TagFactory } from "./tagFactory.js"
 
 type FeedbackType = {
     title?: string
-    note?: number
+    isOpen?: boolean
     tagId?: string
     projectId?: string
     userId?: string
@@ -23,7 +23,7 @@ export class FeedbackFactory {
 
         return Feedback.create({
             title: data.title ?? faker.word.words(),
-            note: data.note ?? faker.number.int({ min:1, max: 5}),
+            isOpen: data.isOpen ?? faker.datatype.boolean(),
             tagId: data.tagId ?? faker.string.uuid() ?? tag!.id,
             projectId: data.projectId ?? faker.string.uuid() ?? project!.id,
             userId: data.userId ?? faker.string.uuid() ?? user!.id
