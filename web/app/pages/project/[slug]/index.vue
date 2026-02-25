@@ -2,7 +2,24 @@
     <div>
         <h1 class="text-2xl font-bold mb-4">Projet {{ project?.name }}</h1>
         
-        <NuxtLink to="/project" class="inline-flex items-center gap-2 text-gray-400"><Icon name="mdi:arrow-left"/>Retour</NuxtLink>
+        <div class="flex justify-between">
+            <NuxtLink to="/project" class="inline-flex items-center gap-2 text-gray-400"><Icon name="mdi:arrow-left"/>Retour</NuxtLink>
+            <NuxtLink
+            :to="`/project/${project?.slug}/settings`"
+            class="group flex items-center justify-center
+                    w-10 h-10 rounded-xl
+                    border border-gray-200
+                    hover:bg-gray-400
+                    transition-all duration-200"
+            >
+            <Icon
+                name="mdi:tune-vertical"
+                class="text-xl text-gray-500
+                    transition-colors duration-200
+                    group-hover:text-gray-100"
+            />
+            </NuxtLink>
+        </div>
         
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 my-6
             max-w-5xl mx-auto">
@@ -11,7 +28,7 @@
 
                 <div class="flex items-center justify-between text-gray-500 text-sm">
                     <span>Visibilité</span>
-                    <Icon 
+                    <Icon
                         :name="project?.isPublic ? 'mdi:earth' : 'mdi:lock'"
                         :class="project?.isPublic ? 'text-green-500' : 'text-red-500'"
                         size="18"
@@ -96,6 +113,7 @@
 </template>
 
 <script setup lang="ts">
+import auth from '~/middlewares/auth';
 import ProjectService from '~/services/api/ProjectService';
 import type { Feedback } from '~/types/Feedback';
 import type { Project } from '~/types/Project';
@@ -123,7 +141,9 @@ const roundedAverage = computed(() => {
   return Math.round(averageRating.value * 10) / 10
 })
 
+definePageMeta({ middleware: auth })
+
 useHead(() => ({
-    title: `Projet ${project.value?.name}`
+    title: `${project.value?.name}`
 }))
 </script>
