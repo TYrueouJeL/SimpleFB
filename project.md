@@ -12,21 +12,17 @@
 
 ### Auth & structure
 
-- Inscription / connexion
-- Gestion d’organisation
-- 1 utilisateur = 1 organisation (au début)
-- JWT / session
-- Middleware de protection API
+- Inscription / connexion OK
+- JWT / session OK
+- Middleware de protection API OK
 
 ### Multi-tenant (obligatoire dès le début)
 
 Base de données avec :
 
-- organisations
 - users
 - projects
 - feedbacks
-- votes
 
 ### Création de projet
 
