@@ -51,6 +51,7 @@ export const useProjectStore = defineStore('projects', () => {
     }
 
     return {
+        cache,
         currentProject,
         projectsList,
         currentProjectId,
@@ -62,3 +63,5 @@ export const useProjectStore = defineStore('projects', () => {
         reset
     }
 })
+
+export type ProjectStore = ReturnType<typeof useProjectStore>

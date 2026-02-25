@@ -107,6 +107,7 @@
 
 <script setup lang="ts">
 import auth from '~/middlewares/auth';
+import projectExists from '~/middlewares/projectExists';
 import ProjectService from '~/services/api/ProjectService';
 import type { Project } from '~/types/Project';
 
@@ -135,7 +136,7 @@ function changePage(newPage: number) {
 
 watch(page, () => refresh())
 
-definePageMeta({ middleware: auth })
+definePageMeta({ middleware: [auth, projectExists] })
 
 useHead(() => ({
     title: `${project.value?.name}`
