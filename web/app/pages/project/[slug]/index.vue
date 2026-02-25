@@ -82,6 +82,26 @@
                 </div>
             </div>
         </div>
+
+        <div class="flex justify-center mt-6 gap-2">
+            <button
+                class="px-4 py-2 border rounded hover:bg-gray-200 disabled:opacity-50"
+                :disabled="page === 1"
+                @click="changePage(page - 1)"
+            >
+                Précédent
+            </button>
+
+            <span class="px-4 py-2">{{ page }} / {{ totalPages }}</span>
+
+            <button
+                class="px-4 py-2 border rounded hover:bg-gray-200 disabled:opacity-50"
+                :disabled="page === totalPages"
+                @click="changePage(page + 1)"
+            >
+                Suivant
+            </button>
+        </div>
     </div>
 </template>
 
@@ -91,18 +111,29 @@ import ProjectService from '~/services/api/ProjectService';
 import type { Project } from '~/types/Project';
 
 const route = useRoute()
+const page = ref(1)
+const limit = 9
 
 const { data: project } = await useAsyncData<Project>(
     () => `project-${route.params.slug}`,
     () => ProjectService.getBySlug(route.params.slug as string)
 )
 
-const { data: feedbackResponse } = await useAsyncData(
-    () => `feedbacks-${route.params.slug}`,
-    () => ProjectService.getFeedbacks(route.params.slug as string)
+const { data: feedbackResponse, refresh } = await useAsyncData(
+    () => `feedbacks-${route.params.slug}-${page.value}`,
+    () => ProjectService.getFeedbacks(route.params.slug as string, page.value, limit)
 )
 
 const feedbacks = computed(() => feedbackResponse.value?.data ?? [])
+const totalPages = computed(() => Math.ceil((feedbackResponse.value?.total ?? 0) / limit))
+
+function changePage(newPage: number) {
+    if (newPage < 1 || newPage > totalPages.value) return
+    page.value = newPage
+    refresh()
+}
+
+watch(page, () => refresh())
 
 definePageMeta({ middleware: auth })
 

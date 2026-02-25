@@ -6,6 +6,6 @@ export default class UserSeeder extends BaseSeeder {
     async run() {
         await db.from('users').delete()
         await UserFactory.createMany(10)
-        await UserFactory.create({ firstname: 'Admin', lastname: 'Admin', email: 'admin@admin.com', password: 'ADmin123*' })
+        await UserFactory.create({ firstname: 'SimpleFB', lastname: 'Admin', email: 'admin@admin.com', password: 'ADmin123*' })
     }
 }

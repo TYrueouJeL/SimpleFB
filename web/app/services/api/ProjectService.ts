@@ -78,13 +78,18 @@ export default class ProjectService {
         })
     }
 
-    static async getFeedbacks(projectSlug: string) {
+    static async getFeedbacks(projectSlug: string, page: number = 1, limit: number = 1, search: string = '') {
         const { token } = useAuthStore()
 
         return $fetch<{ total: number; page: number; limit: number; data: Feedback[] }>(`${apiUrl}/project/${projectSlug}/feedback`, {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${token}`
+            },
+            params: {
+                page,
+                limit,
+                search
             }
         })
     }

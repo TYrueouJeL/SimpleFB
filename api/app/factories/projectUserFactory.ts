@@ -25,36 +25,32 @@ export class ProjectUserFactory {
     }
 
     static async createMany(count: number, data: ProjectUserType = {}) {
-    const pairs = new Set<string>()
-    const results = []
+        const results = []
 
-    if (data.userId && data.projectIds) {
-        for (const projectId of data.projectIds) {
-            const key = `${data.userId}-${projectId}`
-            if (!pairs.has(key)) {
-                pairs.add(key)
-                results.push(await this.create({ ...data, userId: data.userId, projectId }))
+        if (data.userIds && data.projectIds) {
+            const allPairs = []
+
+            for (const userId of data.userIds) {
+                for (const projectId of data.projectIds) {
+                    allPairs.push({ userId, projectId })
+                }
             }
-            if (results.length >= count) break
+
+            if (allPairs.length < count) {
+                throw new Error(
+                    `Impossible de générer ${count} combinaisons uniques. Max possible: ${allPairs.length}`
+                )
+            }
+
+            const shuffled = faker.helpers.shuffle(allPairs).slice(0, count)
+
+            for (const pair of shuffled) {
+                results.push(await this.create({ ...data, ...pair }))
+            }
+
+            return results
         }
-        return results
-    }
 
-    while (results.length < count) {
-        const userId = data.userIds 
-            ? faker.helpers.arrayElement(data.userIds) 
-            : (await UserFactory.create()).id
-        const projectId = data.projectIds 
-            ? faker.helpers.arrayElement(data.projectIds) 
-            : (await ProjectFactory.create()).id
-
-        const key = `${userId}-${projectId}`
-        if (pairs.has(key)) continue
-
-        pairs.add(key)
-        results.push(await this.create({ ...data, userId, projectId }))
-    }
-
-    return results
+        throw new Error("userIds et projectIds requis pour createMany sécurisé")
     }
 }

@@ -7,9 +7,12 @@ import Project from "#models/project"
 export default class FeedbackController {
     private feedbackService = new FeedbackService()
 
-    public async index({ response, params }: HttpContext) {
+    public async index({ response, params, request }: HttpContext) {
+        const page = request.input('page', 1)
+        const limit = request.input('limit', 10)
+        const search = request.input('search', '')
         const project = await Project.findByOrFail('slug', params.projectSlug)
-        const feedbacks = await this.feedbackService.list(project.id)
+        const feedbacks = await this.feedbackService.list(project.id, page, limit, search)
         return response.ok(feedbacks)
     }
 
