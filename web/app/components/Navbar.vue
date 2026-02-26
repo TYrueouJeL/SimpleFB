@@ -1,9 +1,5 @@
 <template>
-    <aside
-        class="fixed top-2 left-2 h-[calc(100vh-1rem)] w-64
-            transition-transform duration-300 z-50
-            bg-slate-800 rounded-xl"
-    >
+    <aside class="fixed top-0 left-0 h-screen w-64 bg-slate-800 z-50">
         <div class="p-6 text-2xl font-bold text-center">
             <NuxtLink
                 to="/"
