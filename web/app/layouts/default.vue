@@ -7,7 +7,7 @@
             <UserMenu />
         </header>
 
-        <main class="flex-1 ml-64">
+        <main class="flex-1 ml-64 p-8">
             <slot />
         </main>
         </div>
