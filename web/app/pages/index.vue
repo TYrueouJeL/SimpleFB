@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full mt-24 bg-gradient-to-b from-gray-100 via-teal-50 to-gray-100">
+    <div class="w-full mt-24 bg-gradient-to-b from-gray-100 via-teal-100 to-gray-100">
         <div class="py-24">
             <div class="flex justify-center flex-wrap">
                 <AnimatedText

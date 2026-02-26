@@ -3,14 +3,14 @@ import { faker } from "@faker-js/faker"
 
 type ProjectType = {
     name?: string
-    isPublic?: boolean
+    enableAnonymousFeedback?: boolean
 }
 
 export class ProjectFactory {
     static async create(data: ProjectType = {}) {
         return Project.create({
             name: data.name || faker.company.name(),
-            isPublic: data.isPublic || faker.datatype.boolean()
+            enableAnonymousFeedback: data.enableAnonymousFeedback || faker.datatype.boolean()
         })
     }
 

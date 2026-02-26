@@ -19,7 +19,7 @@
             <input
             id="isPublic"
             type="checkbox"
-            v-model="form.isPublic"
+            v-model="form.enableAnonymousFeedback"
             class="w-4 h-4"
             />
             <label for="isPublic">Projet public</label>
@@ -44,7 +44,7 @@ import { reactive, ref } from 'vue'
 definePageMeta({ middleware: auth })
 
 const projectStore = useProjectStore()
-const form = reactive({ name: '', isPublic: true })
+const form = reactive({ name: '', enableAnonymousFeedback: true })
 const loading = ref(false)
 const message = ref('')
 const messageType = ref<'success' | 'error'>('success')
@@ -53,12 +53,12 @@ async function handleCreate() {
     loading.value = true
     message.value = ''
     try {
-        const createdProject = await ProjectService.create(form.name, form.isPublic)
+        const createdProject = await ProjectService.create(form.name, form.enableAnonymousFeedback)
         await projectStore.fetchAll()
         message.value = 'Projet créé avec succès !'
         messageType.value = 'success'
         form.name = ''
-        form.isPublic = true
+        form.enableAnonymousFeedback = true
 
         navigateTo(`/project/${createdProject.slug}`)
     } catch (err: any) {

@@ -9,14 +9,14 @@ export default class extends BaseSchema {
 
       table.uuid('tag_id').notNullable()
       table.uuid('project_id').notNullable()
-      table.uuid('user_id').notNullable()
+      table.uuid('user_id').nullable()
 
       table.timestamp('created_at').notNullable()
       table.timestamp('updated_at').nullable()
 
       table.foreign('tag_id').references('id').inTable('tags').onDelete('CASCADE')
       table.foreign('project_id').references('id').inTable('projects').onDelete('CASCADE')
-      table.foreign('user_id').references('id').inTable('users').onDelete('CASCADE')
+      table.foreign('user_id').references('id').inTable('users').onDelete('SET NULL')
 
       table.index(['tag_id'])
       table.index(['project_id'])

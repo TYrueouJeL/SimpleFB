@@ -5,9 +5,6 @@ export const createFeedbackValidator = vine.compile(
         title: vine
             .string(),
 
-        isOpen: vine
-            .boolean(),
-
         tagId: vine
             .string(),
 
@@ -16,6 +13,7 @@ export const createFeedbackValidator = vine.compile(
 
         userId: vine
             .string()
+            .optional()
     })
 )
 
@@ -24,11 +22,7 @@ export const updateFeedbackValidator = vine.compile(
         title: vine
             .string()
             .optional(),
-
-        isOpen: vine
-            .boolean()
-            .optional(),
-
+            
         tagId: vine
             .string()
             .optional(),

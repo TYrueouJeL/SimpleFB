@@ -11,6 +11,7 @@ export default class extends BaseSchema {
       table.uuid('user_id').notNullable()
       table.uuid('project_id').notNullable()
       table.enum('role', Object.values(RoleEnum))
+      table.boolean('enable_anonymous_feedback').notNullable().defaultTo(false)
 
       table.timestamp('created_at').notNullable()
       table.timestamp('updated_at').nullable()

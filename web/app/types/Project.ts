@@ -2,7 +2,7 @@ export interface Project {
     id: string
     name: string
     slug: string
-    isPublic: boolean
+    enableAnonymousFeedback: boolean
     createdAt: Date
     updatedAt?: Date
 }

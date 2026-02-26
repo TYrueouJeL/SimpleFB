@@ -29,7 +29,7 @@ export default class Project extends BaseModel {
   }
 
   @column()
-  declare isPublic: boolean
+  declare enableAnonymousFeedback: boolean
 
   @hasMany(() => ProjectUser)
   declare users: HasMany<typeof ProjectUser>

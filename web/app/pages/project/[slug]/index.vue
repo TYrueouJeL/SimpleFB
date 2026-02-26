@@ -4,21 +4,29 @@
         
         <div class="flex justify-between">
             <NuxtLink to="/project" class="inline-flex items-center gap-2 text-gray-400"><Icon name="mdi:arrow-left"/>Retour</NuxtLink>
-            <NuxtLink
-            :to="`/project/${project?.slug}/settings`"
-            class="group flex items-center justify-center
-                    w-10 h-10 rounded-xl
-                    border border-gray-200
-                    hover:bg-gray-400
-                    transition-all duration-200"
-            >
-            <Icon
-                name="mdi:tune-vertical"
-                class="text-xl text-gray-500
-                    transition-colors duration-200
-                    group-hover:text-gray-100"
-            />
-            </NuxtLink>
+
+            <div class="flex justify-between gap-2">
+                <button @click="handleCopyLink" @dblclick="handleNewFeedback" class="border rounded-xl p-1 px-2 border-teal-400 bg-teal-100 hover:bg-teal-300 hover:shadow transition inline-flex items-center gap-1">
+                    <Icon name="mdi:content-copy"/>
+                    {{ copied ? 'Copié !' : 'Copier le lien' }}
+                </button>
+
+                <NuxtLink
+                :to="`/project/${project?.slug}/settings`"
+                class="group flex items-center justify-center
+                        w-10 h-10 rounded-xl
+                        border border-gray-200
+                        hover:bg-gray-400
+                        transition-all duration-200"
+                >
+                    <Icon
+                        name="mdi:tune-vertical"
+                        class="text-xl text-gray-500
+                            transition-colors duration-200
+                            group-hover:text-gray-100"
+                    />
+                </NuxtLink>
+            </div>
         </div>
         
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 my-6
@@ -27,16 +35,16 @@
             p-5 flex flex-col justify-between hover:shadow-md transition">
 
                 <div class="flex items-center justify-between text-gray-500 text-sm">
-                    <span>Visibilité</span>
+                    <span>Feedbacks anonymes</span>
                     <Icon
-                        :name="project?.isPublic ? 'mdi:earth' : 'mdi:lock'"
-                        :class="project?.isPublic ? 'text-green-500' : 'text-red-500'"
+                        :name="project?.enableAnonymousFeedback ? 'mdi:earth' : 'mdi:lock'"
+                        :class="project?.enableAnonymousFeedback ? 'text-green-500' : 'text-red-500'"
                         size="18"
                     />
                 </div>
 
                 <div class="text-lg font-semibold">
-                    {{ project?.isPublic ? 'Public' : 'Privé' }}
+                    {{ project?.enableAnonymousFeedback ? 'Autorisés' : 'Interdits' }}
                 </div>
             </div>
 
@@ -62,13 +70,6 @@
                 <div class="flex justify-between mb-2">
                     <p class="font-semibold">{{ feedback.title }}</p>
 
-                    <p v-if="feedback.isOpen" class="bg-green-200 text-green-800 rounded-xl px-2 text-sm">Ouvert</p>
-                    <p v-else class="bg-red-200 text-red-800 rounded-xl px-2 text-sm">Fermé</p>
-                </div>
-                
-                <div class="flex justify-between">
-                    <p class="text-sm text-gray-500">Créé le {{ new Date(feedback.createdAt).toLocaleDateString() }} par {{ feedback.user.firstname }} {{ feedback.user.lastname }}</p>
-
                     <span
                     class="inline-block px-2 py-1 text-xs font-semibold rounded-full"
                     :style="{
@@ -80,6 +81,19 @@
                         {{ feedback.tag.name }}
                     </span>
                 </div>
+                
+                <p class="text-sm text-gray-500">
+                    Créé le {{ new Date(feedback.createdAt).toLocaleDateString() }}
+                    par
+
+                    <span v-if="feedback.user">
+                        {{ feedback.user.firstname }} {{ feedback.user.lastname }}
+                    </span>
+                    
+                    <span v-else>
+                        Anonyme
+                    </span>
+                </p>
             </div>
         </div>
 
@@ -132,6 +146,24 @@ function changePage(newPage: number) {
     if (newPage < 1 || newPage > totalPages.value) return
     page.value = newPage
     refresh()
+}
+
+const siteUrl = import.meta.env.VITE_SITE_URL
+const link = ref(`${siteUrl}/project/${project.value?.slug}/feedback/new`)
+const copied = ref(false)
+
+const handleCopyLink = async () => {
+    try {
+        await navigator.clipboard.writeText(link.value)
+        copied.value = true
+        setTimeout(() => copied.value = false, 1000)
+    } catch (err) {
+        console.error('Erreur lors de la copie :', err)
+    }
+}
+
+const handleNewFeedback = async () => {
+    navigateTo(`/project/${project.value?.slug}/feedback/new`)
 }
 
 watch(page, () => refresh())

@@ -6,7 +6,7 @@ export const createProjectValidator = vine.compile(
             .string()
             .regex(/\S/),
 
-        isPublic: vine
+        enableAnonymousFeedback: vine
             .boolean(),
     })
 )
@@ -18,7 +18,7 @@ export const updateProjectValidator = vine.compile(
             .regex(/\S/)
             .optional(),
 
-        isPublic: vine
+        enableAnonymousFeedback: vine
             .boolean()
             .optional(),
     })

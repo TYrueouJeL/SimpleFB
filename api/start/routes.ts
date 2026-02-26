@@ -24,6 +24,8 @@ router.post('/register', [AuthController, 'register'])
 router.post('/logout', [AuthController, 'logout']).use(middleware.auth({ guards: ['api'] }))
 router.get('/me', [AuthController, 'me']).use(middleware.auth({ guards: ['api'] }))
 
+router.post('/project/:projectSlug/feedback', [FeedbackController, 'store'])
+
 router.group(() => {
   router.get('/', [ProjectController, 'index'])
   router.post('/', [ProjectController, 'store'])
@@ -33,7 +35,6 @@ router.group(() => {
 
   router.group(() => {
     router.get('/', [FeedbackController, 'index'])
-    router.post('/', [FeedbackController, 'store'])
     router.get('/:feedbackId', [FeedbackController, 'show'])
     router.put('/:feedbackId', [FeedbackController, 'update'])
     router.delete('/:feedbackId', [FeedbackController, 'delete'])

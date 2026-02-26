@@ -8,7 +8,7 @@ export default class extends BaseSchema {
       table.uuid('id').notNullable().primary()
       table.string('name').notNullable()
       table.string('slug').notNullable().unique()
-      table.boolean('is_public').notNullable().defaultTo(false)
+      table.boolean('enable_anonymous_feedback').notNullable().defaultTo(false)
 
       table.timestamp('created_at').notNullable()
       table.timestamp('updated_at').nullable()

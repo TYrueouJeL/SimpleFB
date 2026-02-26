@@ -27,7 +27,7 @@ export default class ProjectService {
         })
     }
 
-    static async create(name: string, isPublic: boolean) {
+    static async create(name: string, enableAnonymousFeedback: boolean) {
         const { token } = useAuthStore()
 
         if (!name || name.trim().length === 0) {
@@ -41,22 +41,22 @@ export default class ProjectService {
             },
             body: {
                 name,
-                isPublic
+                enableAnonymousFeedback: enableAnonymousFeedback
             }
         })
     }
 
-    static async update(projectSlug: string, name?: string, isPublic?: boolean) {
+    static async update(projectSlug: string, name?: string, enableAnonymousFeedback?: boolean) {
         const { token } = useAuthStore()
 
         if (!name || name.trim().length === 0) {
             throw new Error("Le nom du projet ne peut pas être vide ou uniquement constitué d'espaces")
         }
 
-        const body: Partial<{ name: string, isPublic: boolean }> = {}
+        const body: Partial<{ name: string, enableAnonymousFeedback: boolean }> = {}
 
         if (name !== undefined) body.name = name
-        if (isPublic !== undefined) body.isPublic = isPublic
+        if (enableAnonymousFeedback !== undefined) body.enableAnonymousFeedback = enableAnonymousFeedback
 
         return $fetch<Project>(`${apiUrl}/project/${projectSlug}`, {
             method: 'PUT',

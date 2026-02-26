@@ -2,15 +2,15 @@ export interface ProjectDTO {
     id: string
     name: string
     slug: string
-    isPublic: boolean
+    enableAnonymousFeedback: boolean
 }
 
 export interface CreateProjectDTO {
     name: string
-    isPublic: boolean
+    enableAnonymousFeedback: boolean
 }
 
 export interface UpdateProjectDTO {
     name?: string
-    isPublic?: boolean
+    enableAnonymousFeedback?: boolean
 }

@@ -18,13 +18,15 @@
         </div>
 
         <div class="flex items-center gap-2">
-            <input
-            id="isPublic"
-            type="checkbox"
-            v-model="form.isPublic"
-            class="w-4 h-4"
-            />
-            <label for="isPublic">Projet public</label>
+            <div class="mx-auto block">
+                <input
+                id="enableAnonymousFeedback"
+                type="checkbox"
+                v-model="form.enableAnonymousFeedback"
+                class="w-4 h-4 mr-2"
+                />
+                <label for="enableAnonymousFeedback">Autorisation des feedback anonymes</label>
+            </div>
         </div>
 
         <button type="submit" :disabled="loading" class="border rounded p-2 hover:bg-gray-300 transition duration-300">
@@ -58,7 +60,7 @@ const { data: project } = await useAsyncData<Project>(
 )
 
 const projectStore = useProjectStore()
-const form = reactive({ name: project.value?.name, isPublic: project.value?.isPublic })
+const form = reactive({ name: project.value?.name, enableAnonymousFeedback: project.value?.enableAnonymousFeedback })
 const loading = ref(false)
 const message = ref('')
 const messageType = ref<'success' | 'error'>('success')
@@ -67,12 +69,12 @@ async function handleUpdate() {
     loading.value = true
     message.value = ''
     try {
-        const createdProject = await ProjectService.update(project.value?.slug as string, form.name, form.isPublic)
+        const createdProject = await ProjectService.update(project.value?.slug as string, form.name, form.enableAnonymousFeedback)
         await projectStore.fetchAll()
         message.value = 'Projet modifié avec succès !'
         messageType.value = 'success'
         form.name = ''
-        form.isPublic = true
+        form.enableAnonymousFeedback = true
 
         await refreshNuxtData(`project-${project.value?.slug}`)
 

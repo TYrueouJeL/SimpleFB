@@ -4,7 +4,6 @@ import { faker } from "@faker-js/faker"
 type TagType = {
     name?: string
     color?: string
-    isOpen?: boolean
 }
 
 export class TagFactory {
@@ -12,7 +11,6 @@ export class TagFactory {
         return Tag.create({
             name: data.name ?? faker.word.sample({ length: { min: 3, max: 10 } }),
             color: data.color ?? faker.color.rgb(),
-            isOpen: data.isOpen ?? faker.datatype.boolean()
         })
     }
 

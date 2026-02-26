@@ -12,10 +12,14 @@ export default class FeedbackSeeder extends BaseSeeder {
         const customers = await User.all()
 
         await db.from('feedbacks').delete()
-        await FeedbackFactory.createMany(20, {
+        await FeedbackFactory.createMany(9, {
             tagIds: tags.map(t => t.id),
             projectIds: projects.map(p => p.id),
             userIds: customers.map(c => c.id)
+        })
+        await FeedbackFactory.createMany(9, {
+            tagIds: tags.map(t => t.id),
+            projectIds: projects.map(p => p.id)
         })
     }
 }

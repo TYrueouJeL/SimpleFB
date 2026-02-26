@@ -5,6 +5,6 @@ import { ProjectFactory } from "../../app/factories/projectFactory.js";
 export default class ProjectSeeder extends BaseSeeder {
     async run() {
         await db.from('projects').delete()
-        await ProjectFactory.create({ name: 'SimpleFB', isPublic: true })
+        await ProjectFactory.create({ name: 'SimpleFB', enableAnonymousFeedback: true })
     }
 }

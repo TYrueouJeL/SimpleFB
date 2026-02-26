@@ -40,7 +40,7 @@ export default class ProjectService {
         id: project.id,
         name: project.name,
         slug: project.slug,
-        isPublic: project.isPublic
+        enableAnonymousFeedback: project.enableAnonymousFeedback
     }
     }
 

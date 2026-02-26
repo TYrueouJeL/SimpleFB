@@ -18,9 +18,6 @@ export default class Feedback extends BaseModel {
   @column()
   declare title: string
   
-    @column()
-    declare isOpen: boolean
-
   @column()
   declare tagId: string
 
@@ -34,7 +31,7 @@ export default class Feedback extends BaseModel {
   declare project: BelongsTo<typeof Project>
 
   @column()
-  declare userId: string
+  declare userId?: string | null
 
   @belongsTo(() => User)
   declare user: BelongsTo<typeof User>

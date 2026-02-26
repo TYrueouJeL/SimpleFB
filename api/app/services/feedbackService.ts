@@ -25,7 +25,6 @@ export default class FeedbackService {
         const data = feedbacks.map((feedback) => ({
             id:feedback.id,
             title: feedback.title,
-            isOpen: feedback.isOpen,
             tag: feedback.tag,
             project: feedback.project,
             user: feedback.user,
@@ -62,7 +61,6 @@ export default class FeedbackService {
         return {
             id:feedback.id,
             title: feedback.title,
-            isOpen: feedback.isOpen,
             tag: feedback.tag,
             project: feedback.project,
             user: feedback.user,
